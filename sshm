@@ -1,0 +1,23 @@
+#!/bin/bash
+ARG1=$1
+DIRECTORY=$2
+USERHOST=${ARG1/:*/}
+HOST=${USERHOST/*@/}
+HOST=${HOST/:*/}
+if [[ $ARG1 == *:* ]]
+  then
+    PORT=${ARG1/*:/}
+  else
+    PORT=22
+fi
+if [ -z "$HOST" ]; then
+  echo Error: hostname not specified >&2
+  exit 1
+fi
+if [ -z "$DIRECTORY" ]; then
+	DIRECTORY=$HOST
+fi
+mkdir -p /Volumes/$DIRECTORY
+sshfs -p $PORT $USERHOST:/ -o reconnect,compression=yes,follow_symlinks,ServerAliveInterval=30,ServerAliveCountMax=30,ssh_command='autossh -M 0',defer_permissions /Volumes/$DIRECTORY -ovolname=$DIRECTORY
+autossh -M 0 -p $PORT $USERHOST
+umount /Volumes/$DIRECTORY

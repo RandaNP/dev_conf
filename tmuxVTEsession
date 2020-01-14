@@ -1,0 +1,86 @@
+#! /bin/bash
+
+# functions
+function printHelp {
+	echo "tmuxVTEsession HELP"
+	echo "usage: tmuxVTEsession [-ch] -l ssh-url [-p ssh-port] [-u ssh-user]"
+       	echo "                      [-d local-mount-point] [-r vte-remote-dir] [-w window-name]"
+		echo "						[-s session-name]"
+	echo "       options:"
+	echo "               -c    use current tmux window"
+	echo "               -h    show this help"
+	exit 0
+}
+
+# controllo parametri
+if [[ $# -eq 0 ]]; then
+	printHelp
+fi
+
+# controllo opzioni
+while getopts s:w:u:l:p:d:r:ch option
+do
+	case "${option}"
+		in
+		s) SESSIONNAME=${OPTARG};;
+		w) WINDOWNAME=${OPTARG};;
+		u) SSH_USER=${OPTARG};;
+		l) SSH_URL=${OPTARG};;
+		p) SSH_PORT=':'${OPTARG};;
+		r) VTE_REMOTE_DIR=${OPTARG};;
+		d) LOCAL_DIR=${OPTARG};;
+		c) USE_CURRENT_WINDOW=1;;
+		h) printHelp;;
+	esac
+done
+
+if [[ -z $SSH_URL ]]; then
+	printHelp
+fi
+
+if [[ -z $SESSIONNAME ]]; then
+	SESSIONNAME="WORK"
+fi
+
+if [[ -z $SSH_USER ]]; then
+	SSH_USER="root"
+fi
+
+if [[ -z $VTE_REMOTE_DIR ]]; then
+	VTE_REMOTE_DIR="usr/share/vte"
+fi
+
+if [[ -z $WINDOWNAME ]]; then
+	WINDOWNAME=$SSH_URL
+fi
+
+if [[ -z $LOCAL_DIR ]]; then
+	LOCAL_DIR=$SSH_URL
+fi
+
+
+
+# verifico esistenza sessione
+tmux has-session -t $SESSIONNAME &> /dev/null
+if [ $? != 0 ]; then
+	tmux new-session -s $SESSIONNAME -n $WINDOWNAME -d
+	ARGUMENTS="$@"
+	tmux send-keys -t $SESSIONNAME:$WINDOWNAME "tmuxVTEsession -c $ARGUMENTS" C-m
+	tmux attach -t $SESSIONNAME
+else
+	if [[ -z $USE_CURRENT_WINDOW ]]; then
+		tmux new-window -n $WINDOWNAME -t $SESSIONNAME
+	fi
+	tmux split-window -p 25 -v -t $SESSIONNAME:$WINDOWNAME
+	tmux select-pane -t $SESSIONNAME:$WINDOWNAME.1
+	tmux send-keys -t $SESSIONNAME:$WINDOWNAME.1 "sshm $SSH_USER@$SSH_URL$SSH_PORT $LOCAL_DIR" C-m
+	tmux set-option -t $SESSIONNAME display-time 1500
+	while [ ! -d "/Volumes/$LOCAL_DIR/$VTE_REMOTE_DIR" ]; do
+		tmux display-message "waiting for connection..."
+		sleep 2
+	done
+	tmux send-keys -t $SESSIONNAME:$WINDOWNAME.1 "tmux new-session -s $WINDOWNAME -A" C-m
+	tmux send-keys -t $SESSIONNAME:$WINDOWNAME.1 "cd /$VTE_REMOTE_DIR" C-m
+	tmux select-pane -t $SESSIONNAME:$WINDOWNAME.0
+	tmux send-keys -t $SESSIONNAME:$WINDOWNAME.0 "cd /Volumes/$LOCAL_DIR/$VTE_REMOTE_DIR;vim;cd" C-m
+fi

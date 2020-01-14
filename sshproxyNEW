@@ -1,0 +1,8 @@
+#!/bin/bash
+status=`ps -ax | grep "autossh *-M 0 -D 8123" | grep -v grep | awk '{ print $1 }'`
+if [ -z "$status" ]; then
+	echo "Activating NEWsnc SSH proxy"
+	autossh -f -M 0 -D 8123 -N root@vte.newcomm.it
+else
+	echo "NEWsnc SSH proxy already active"
+fi

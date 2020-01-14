@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# functions
+function printHelp {
+	echo "randaDevTools HELP"
+	echo "usage: randaDevTools (-b | -r) [-h] [-d repository path]"
+	echo "       options:"
+	echo "               -b    backup"
+	echo "               -r    restore"
+	echo "               -h    show this help"
+	exit 0
+}
+
+# controllo parametri
+if [[ $# -eq 0 ]]; then
+	printHelp
+fi
+
+# controllo opzioni
+MODE=''
+while getopts brd:h option
+do
+	case "${option}"
+		in
+		b) [[ -n "$MODE" ]] && printHelp || MODE="BACKUP";;
+		r) [[ -n "$MODE" ]] && printHelp || MODE="RESTORE";;
+		d) DEV=${OPTARG};;
+		h) printHelp;;
+	esac
+done
+
+if [[ -z $DEV ]]; then
+	DEV="Dropbox/dev_conf"
+fi
+
+if [ $MODE == "BACKUP" ]; then
+	mkdir -p $DEV/vim
+	rsync -a .vim/ $DEV/vim
+	cp .vimrc $DEV/vimrc
+	cp .bash_profile $DEV/bash_profile
+	mkdir -p $DEV/ssh
+	cp .ssh/config $DEV/ssh/
+fi
+
+if [ $MODE == "RESTORE" ]; then
+	rsync -a $DEV/vim .vim/
+	cp $DEV/vimrc .vimrc
+	cp $DEV/bash_profile .bash_profile
+	cp $DEV/ssh/config .ssh/
+	cp $DEV/sshm /usr/local/bin
+	chmod +x /usr/local/bin/sshm
+	cp $DEV/sshproxyNEW /usr/local/bin
+	chmod +x /usr/local/bin/sshproxyNEW
+	cp $DEV/randaDevTools /usr/local/bin
+	chmod +x /usr/local/bin/randaDevTools
+	cp $DEV/tmuxVTEsession /usr/local/bin
+	chmod +x /usr/local/bin/tmuxVTEsession
+	cp $DEV/multiDiff.py /usr/local/bin
+	chmod +x /usr/local/bin/multiDiff.py
+fi
