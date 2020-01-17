@@ -1,56 +1,56 @@
 set nocompatible
 filetype off			" Required
 
-set rtp+=~/.vim/bundle/vundle
-call vundle#rc()
+call plug#begin('~/.vim/plugged')
 
-" Let Vundle manage Vundle
-Bundle 'gmarik/vundle'
-
-" My Bundles
+" My Plugins
 " VIM solarized theme
-Bundle 'altercation/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 " VIM tomorrow-theme-vim
-Bundle 'd11wtq/tomorrow-theme-vim'
+Plug 'd11wtq/tomorrow-theme-vim'
 " airline header and footer status bar
-Bundle 'bling/vim-airline'
+Plug 'bling/vim-airline'
 " close buffers without messing split
-Bundle 'moll/vim-bbye'
+Plug 'moll/vim-bbye'
 " Sublime Text style multiple selection
-Bundle 'terryma/vim-multiple-cursors'
+Plug 'terryma/vim-multiple-cursors'
 " NERDTree
-Bundle 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 " NERDTree-execute to open pdf, jpeg.. with system editor
-Bundle 'ivalkeen/nerdtree-execute'
+Plug 'ivalkeen/nerdtree-execute'
 " Syntax highligter
-Bundle 'scrooloose/syntastic'
+"Plug 'scrooloose/syntastic'
+" A.L.E. Asynchronous Lint Engine
+Plug 'w0rp/ale'
 " DirDiff
-Bundle "will133/vim-dirdiff"
+Plug 'will133/vim-dirdiff'
 " Linediff
 " https://github.com/AndrewRadev/linediff.vim.git
-Bundle "git://github.com/AndrewRadev/linediff.vim.git", {'name': 'linediff'}
+Plug 'git://github.com/AndrewRadev/linediff.vim.git', {'name': 'linediff'}
 " Emmet.vim - CSS selector style abbreviation expander
-Bundle 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 " vim-easy-align
-Bundle 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 " Surround - edit surround quotes, tag, etc..
-"Bundle 'tpope/vim-surround'
+"Plug 'tpope/vim-surround'
 " tComment - commentig pligin
-Bundle 'tomtom/tplugin_vim'
+Plug 'tomtom/tplugin_vim'
 " Vdebug - Multi-language DBGP debugger client for Vim (PHP, Python, Perl,
 " Ruby, etc.)
-Plugin 'joonty/vdebug'
+Plug 'joonty/vdebug'
 " Vim plugin for .tmux.conf
-Bundle 'tmux-plugins/vim-tmux'
+Plug 'tmux-plugins/vim-tmux'
+" MarkDown Preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+" Remark.js plugin - convert MarkDown to self contained HTML slideshows
+Plug 'idbrii/vim-remarkjs'
 
-filetype plugin indent on 	" Required
+call plug#end()
 
-" Solarized Theme settings
-set number
+set number relativenumber
 syntax enable
-"set background=dark
-"let g:solarized_termcolors=256
-"colorscheme solarized
+
+" Tomorrow-Night Theme settings
 try
 	color Tomorrow-Night
 catch
@@ -82,21 +82,114 @@ let g:ctrlp_map = '<c-p>'
 " ----- kien/ctrlp.vim setting stop -----
 
 " ----- scooloose/syntastic setting start ---
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_loc_list_height = 5
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_warning_symbol = '⚠️'
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_loc_list_height = 5
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_eslint_exe = 'npm run lint --'
+"let g:syntastic_error_symbol = '❌'
+"let g:syntastic_warning_symbol = '⚠️'
+"highlight link SyntasticErrorSign SignColumn
+"highlight link SyntasticWarningSign SignColumn
 " ----- scroolose/syntastic setting end ----
+
+" ----- A.L.E. settings start -----
+" Airline integration
+let g:airline#extensions#ale#enabled = 1
+" Show 5 lines of errors (default: 10)
+let g:ale_list_window_size = 5
+" sings customization
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
+" ----- A-L-E- settings end -------
+
+" ----- iamcco/markdown-preview setting start --
+" set to 1, nvim will open the preview window after entering the markdown buffer
+" default: 0
+let g:mkdp_auto_start = 0
+
+" set to 1, the nvim will auto close current preview window when change
+" from markdown buffer to another buffer
+" default: 1
+let g:mkdp_auto_close = 1
+
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode, default 0 is auto refresh markdown as you edit or
+" move the cursor
+" default: 0
+let g:mkdp_refresh_slow = 0
+
+" set to 1, the MarkdownPreview command can be use for all files,
+" by default it can be use in markdown file
+" default: 0
+let g:mkdp_command_for_global = 0
+
+" set to 1, preview server available to others in your network
+" by default, the server listens on localhost (127.0.0.1)
+" default: 0
+let g:mkdp_open_to_the_world = 0
+
+" use custom IP to open preview page
+" useful when you work in remote vim and preview on local browser
+" more detail see: https://github.com/iamcco/markdown-preview.nvim/pull/9
+" default empty
+let g:mkdp_open_ip = ''
+
+" specify browser to open preview page
+" default: ''
+let g:mkdp_browser = ''
+
+" set to 1, echo preview page url in command line when open preview page
+" default is 0
+let g:mkdp_echo_preview_url = 0
+
+" a custom vim function name to open preview page
+" this function will receive url as param
+" default is empty
+let g:mkdp_browserfunc = ''
+
+" options for markdown render
+" mkit: markdown-it options for render
+" katex: katex options for math
+" uml: markdown-it-plantuml options
+" maid: mermaid options
+" disable_sync_scroll: if disable sync scroll, default 0
+" sync_scroll_type: 'middle', 'top' or 'relative', default value is 'middle'
+"   middle: mean the cursor position alway show at the middle of the preview page
+"   top: mean the vim top viewport alway show at the top of the preview page
+"   relative: mean the cursor position alway show at the relative positon of the preview page
+" hide_yaml_meta: if hide yaml metadata, default is 1
+" sequence_diagrams: js-sequence-diagrams options
+let g:mkdp_preview_options = {
+    \ 'mkit': {},
+    \ 'katex': {},
+    \ 'uml': {},
+    \ 'maid': {},
+    \ 'disable_sync_scroll': 0,
+    \ 'sync_scroll_type': 'middle',
+    \ 'hide_yaml_meta': 1,
+    \ 'sequence_diagrams': {}
+    \ }
+
+" use a custom markdown style must be absolute path
+let g:mkdp_markdown_css = ''
+
+" use a custom highlight style must absolute path
+let g:mkdp_highlight_css = ''
+
+" use a custom port to start server or random for empty
+let g:mkdp_port = ''
+
+" preview page title
+" ${name} will be replace with the file name
+let g:mkdp_page_title = '「${name}」'
+" ----- iamcco/markdown-preview setting end ----
 
 " -------------- My settings ----------------
 set encoding=utf-8
@@ -115,23 +208,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " open default in vertical split if current buffer is not already saved
 " NON FUNZIONA, apre tutti i nuovi in vertical split
 "autocmd FileType nerdtree nmap <buffer> <CR> s
-
-"set Vim Explore behave like NERDTree
-"set treelist view
-"let g:netrw_liststyle = 3
-"set open in previous window to the right
-"let g:netrw_browse_split = 4
-"let g:netrw_altv = 1
-"set width in %
-"let g:netrw_winsize = 16
-"hide informative banner
-"let g:netrw_banner = 0
-"launch on vim loading
-"augroup ProjectDrawer
-	"autocmd!
-	"autocmd VimEnter * :Vexplore
-	"autocmd VimEnter * :set winfixwidth
-"augroup END
+let g:NERDTreeHighlightCursorline = 1
+let g:NERDTreeAutoDeleteBuffer = 1
+let g:NERDTreeNaturalSort = 1
 
 " The Silver Searcher
 if executable('ag')
@@ -147,6 +226,9 @@ if executable('ag')
   " bind K to grep word under cursor
   nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 endif
+
+" Let <esc> to clear last search highlighting when then redraw screen
+nnoremap <silent> <esc> :nohlsearch<CR><esc>
 " More natural Split behaviour
 set splitbelow
 set splitright
@@ -166,11 +248,3 @@ let php_htmlInStrings = 1  "Syntax highlight HTML code inside PHP strings.
 let php_sql_query = 1      "Syntax highlight SQL code inside PHP strings.
 let php_noShortTags = 1    "Disable PHP short tags.
 
-" Vdebug settings
-let g:vdebug_options = {
-			\"port" : 9000,
-			\"break_on_open": 0,
-			\"path_maps" : {
-			\		"/usr/share/vte": "/Volumes/vte.newcomm.it/usr/share/vte"
-			\		}
-			\}
