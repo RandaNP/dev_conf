@@ -1,4 +1,15 @@
 #!/bin/bash
+
+# check OS
+unameOut="$(uname -s)"
+case "${unameOut}" in
+	Linux*)		machine=Linux;;
+	Darwin*)	machine=Mac;;
+	CYGWIN*)	machine=Cygwin;;
+	MINGW*)		machine=MinGw;;
+	*)			machine="UNKNOWN:${unameOut}"
+esac
+
 ARG1=$1
 DIRECTORY=$2
 USERHOST=${ARG1/:*/}
@@ -17,7 +28,24 @@ fi
 if [ -z "$DIRECTORY" ]; then
 	DIRECTORY=$HOST
 fi
-mkdir -p /Volumes/$DIRECTORY
-sshfs -p $PORT $USERHOST:/ -o reconnect,compression=yes,follow_symlinks,ServerAliveInterval=30,ServerAliveCountMax=30,ssh_command='autossh -M 0',defer_permissions /Volumes/$DIRECTORY -ovolname=$DIRECTORY
+
+case "${machine}" in
+	Linux)		SYSPATH=~/.volumes/;;
+	Mac)		SYSPATH=/Volumes/;;
+	*)			echo Error: support only GNU/Linux or MacOS
+				exit 1;;
+esac
+
+#mkdir -p /Volumes/$DIRECTORY
+mkdir -p $SYSPATH$DIRECTORY
+#sshfs -p $PORT $USERHOST:/ -o reconnect,compression=yes,follow_symlinks,ServerAliveInterval=30,ServerAliveCountMax=30,ssh_command='autossh -M 0',defer_permissions /Volumes/$DIRECTORY -ovolname=$DIRECTORY
+
+case "${machine}" in
+	Linux)		sshfs -p $PORT $USERHOST:/ -o reconnect,compression=yes,follow_symlinks,ServerAliveInterval=30,ServerAliveCountMax=30,ssh_command='autossh -M 0' $SYSPATH$DIRECTORY;;
+	Mac)		sshfs -p $PORT $USERHOST:/ -o reconnect,compression=yes,follow_symlinks,ServerAliveInterval=30,ServerAliveCountMax=30,ssh_command='autossh -M 0',defer_permissions $SYSPATH$DIRECTORY -ovolname=$DIRECTORY;;
+esac
+
 autossh -M 0 -p $PORT $USERHOST
-umount /Volumes/$DIRECTORY
+#umount /Volumes/$DIRECTORY
+umount $SYSPATH$DIRECTORY
+rmdir $SYSPATH$DIRECTORY
