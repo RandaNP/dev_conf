@@ -8,6 +8,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'altercation/vim-colors-solarized'
 " VIM tomorrow-theme-vim
 Plug 'd11wtq/tomorrow-theme-vim'
+" VIM gruvbox
+Plug 'morhetz/gruvbox'
 " airline header and footer status bar
 Plug 'bling/vim-airline'
 " close buffers without messing split
@@ -44,6 +46,8 @@ Plug 'tmux-plugins/vim-tmux'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " Remark.js plugin - convert MarkDown to self contained HTML slideshows
 Plug 'idbrii/vim-remarkjs'
+" IndentLine - show indentation levels
+Plug 'Yggdroot/indentLine'
 
 call plug#end()
 
@@ -51,10 +55,14 @@ set number relativenumber
 syntax enable
 
 " Tomorrow-Night Theme settings
-try
-	color Tomorrow-Night
-catch
-endtry
+"try
+"	color Tomorrow-Night
+"catch
+"endtry
+
+set termguicolors
+set background=dark
+colorscheme gruvbox
 
 " ----- bling/vim-airline settings start -----
 "  Always show statusbar
@@ -190,6 +198,11 @@ let g:mkdp_port = ''
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
 " ----- iamcco/markdown-preview setting end ----
+
+" ----- Yggdroot/indentLin settings start ------
+let g:indentLine_setColors = 0
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+" ----- Yggdroot/indentLin settings end --------
 
 " -------------- My settings ----------------
 set encoding=utf-8
