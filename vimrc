@@ -67,6 +67,19 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 Plug 'idbrii/vim-remarkjs'
 " IndentLine - show indentation levels
 Plug 'Yggdroot/indentLine'
+" ncm2 - Intellisense / Autocomplete / OmniCompletionPlug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-bufword'
+"--------------------------------------------------------------------
+" LanguageClient (LSP)
+Plug 'autozimu/LanguageClient-neovim', {
+			\ 'branch': 'next',
+			\ 'do': 'bash install.sh',
+			\ }
+
+" (Optional) Multi-entry selection UI.
+Plug 'junegunn/fzf'
 
 call plug#end()
 
@@ -195,15 +208,15 @@ let g:mkdp_browserfunc = ''
 " hide_yaml_meta: if hide yaml metadata, default is 1
 " sequence_diagrams: js-sequence-diagrams options
 let g:mkdp_preview_options = {
-    \ 'mkit': {},
-    \ 'katex': {},
-    \ 'uml': {},
-    \ 'maid': {},
-    \ 'disable_sync_scroll': 0,
-    \ 'sync_scroll_type': 'middle',
-    \ 'hide_yaml_meta': 1,
-    \ 'sequence_diagrams': {}
-    \ }
+			\ 'mkit': {},
+			\ 'katex': {},
+			\ 'uml': {},
+			\ 'maid': {},
+			\ 'disable_sync_scroll': 0,
+			\ 'sync_scroll_type': 'middle',
+			\ 'hide_yaml_meta': 1,
+			\ 'sequence_diagrams': {}
+			\ }
 
 " use a custom markdown style must be absolute path
 let g:mkdp_markdown_css = ''
@@ -223,6 +236,32 @@ let g:mkdp_page_title = '「${name}」'
 let g:indentLine_setColors = 0
 let g:indentLine_char_list = ['|', '¦', '┆', '┊']
 " ----- Yggdroot/indentLin settings end --------
+
+" ----- ncm2 settings start --------------------
+" enable ncm2 for all buffers
+"autocmd BufEnter * call ncm2#enable_for_buffer()
+" set completeopt to be what ncm2 expects
+set completeopt=noinsert,menuone,noselect
+" ----- ncm2 settings end ----------------------
+
+" ----- LanguageClient-neovim settings start ---
+" Required for operations modifying multiple buffers like rename.
+set hidden
+
+let g:LanguageClient_serverCommands = {
+			\ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+			\ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+			\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+			\ 'python': ['/usr/local/bin/pyls'],
+			\ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+			\ }
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> L :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" ----- LanguageClient-neovim settings end -----
 
 " -------------- My settings ----------------
 set encoding=utf-8
@@ -247,17 +286,17 @@ let g:NERDTreeNaturalSort = 1
 
 " The Silver Searcher
 if executable('ag')
-  " Use ag over grep
-  set grepprg=ag\ --nogroup\ --nocolor
+	" Use ag over grep
+	set grepprg=ag\ --nogroup\ --nocolor
 
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+	" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+	let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
+	" ag is fast enough that CtrlP doesn't need to cache
+	let g:ctrlp_use_caching = 0
 
-  " bind K to grep word under cursor
-  nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+	" bind K to grep word under cursor
+	nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 endif
 
 " Let <esc> to clear last search highlighting when then redraw screen
@@ -271,7 +310,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Start scrolling when we're 8 lines away from margins
-set scrolloff=8 
+set scrolloff=8
 set sidescrolloff=15
 set sidescroll=1
 
