@@ -1,6 +1,6 @@
 # Pacchetti da installare
 ```
-sudo apt install git sshfs autossh neovim tmux
+sudo apt install git sshfs autossh neovim tmux python-pip python3-pip
 ```
 
 
