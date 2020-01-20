@@ -1,6 +1,23 @@
 set nocompatible
 filetype off			" Required
 
+" Install vim-plug if not installed
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+	silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall
+endif
+
+" Install Nerd Fonts if not installed
+if has('unix')
+	if empty(glob('~/.local/share/fonts/Sauce Code Pro Nerd Font Complete Mono.ttf'))
+		!curl -fLo ~/.local/share/fonts/Sauce\ Code\ Pro\ Nerd\ Font\ Complete\ Mono.ttf --create-dirs
+					\ https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Regular/complete/Sauce\%20Code\%20Pro\%20Nerd\%20Font\%20Complete\%20Mono.ttf?raw=true
+		!sudo fc-cache -fv ~/.local/share/fonts
+	endif
+endif
+
+
 call plug#begin('~/.vim/plugged')
 
 " My Plugins
@@ -8,6 +25,10 @@ call plug#begin('~/.vim/plugged')
 Plug 'altercation/vim-colors-solarized'
 " VIM tomorrow-theme-vim
 Plug 'd11wtq/tomorrow-theme-vim'
+" VIM gruvbox theme
+Plug 'morhetz/gruvbox'
+" vim-devicons - adds icons to your plugins
+Plug 'ryanoasis/vim-devicons'
 " airline header and footer status bar
 Plug 'bling/vim-airline'
 " close buffers without messing split
@@ -50,11 +71,14 @@ call plug#end()
 set number relativenumber
 syntax enable
 
+" Gruvbox Theme settings
+set background=dark
+colorscheme gruvbox
 " Tomorrow-Night Theme settings
-try
-	color Tomorrow-Night
-catch
-endtry
+"try
+"	color Tomorrow-Night
+"catch
+"endtry
 
 " ----- bling/vim-airline settings start -----
 "  Always show statusbar

@@ -3,6 +3,7 @@
 sudo apt install git sshfs autossh neovim tmux
 ```
 
+
 # Powerline Fonts
 ```
 git clone https://github.com/powerline/fonts.git --depth=1 fonts
@@ -11,13 +12,24 @@ rm -rf fonts/
 ```
 
 
-# Ripristino configurazioni
+# Abilitazione vimrc su NeoVim
 ```
-Dropbox/dev_conf/randaDevTools -r
+mkdir -p .config/nvim/init.vim
+echo "set runtimepath^=~/.vim runtimepath+=~/.vim/after" > .config/nvim/init.vim
+echo "let &packpath = &runtimepath" >> .config/nvim/init.vim
+echo "source ~/.vimrc" >> .config/nvim/init.vim
 ```
 
+
+# Copiare gli rc files
+```
+mv vimrc ~/.vimrc
+mv tmux.conf ~/.tmux.conf
+```
+
+
 # Installazione plugin
-Lanciare VIM e installare i plugin
+Lanciare NeoVim e installare i plugin
 ```
 vim
 :PlugInstall
