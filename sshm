@@ -47,5 +47,5 @@ esac
 
 autossh -M 0 -p $PORT $USERHOST
 #umount /Volumes/$DIRECTORY
-umount $SYSPATH$DIRECTORY
+sudo umount $SYSPATH$DIRECTORY
 rmdir $SYSPATH$DIRECTORY
