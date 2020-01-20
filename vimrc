@@ -65,6 +65,8 @@ Plug 'tmux-plugins/vim-tmux'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " Remark.js plugin - convert MarkDown to self contained HTML slideshows
 Plug 'idbrii/vim-remarkjs'
+" IndentLine - show indentation levels
+Plug 'Yggdroot/indentLine'
 
 call plug#end()
 
@@ -72,8 +74,10 @@ set number relativenumber
 syntax enable
 
 " Gruvbox Theme settings
+set termguicolors
 set background=dark
 colorscheme gruvbox
+
 " Tomorrow-Night Theme settings
 "try
 "	color Tomorrow-Night
@@ -214,6 +218,11 @@ let g:mkdp_port = ''
 " ${name} will be replace with the file name
 let g:mkdp_page_title = '「${name}」'
 " ----- iamcco/markdown-preview setting end ----
+
+" ----- Yggdroot/indentLin settings start ------
+let g:indentLine_setColors = 0
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+" ----- Yggdroot/indentLin settings end --------
 
 " -------------- My settings ----------------
 set encoding=utf-8
