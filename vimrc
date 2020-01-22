@@ -54,7 +54,7 @@ Plug 'mattn/emmet-vim'
 Plug 'junegunn/vim-easy-align'
 " Surround - edit surround quotes, tag, etc..
 "Plug 'tpope/vim-surround'
-" tComment - commentig pligin
+" tComment - commentig plugin
 Plug 'tomtom/tplugin_vim'
 " Vdebug - Multi-language DBGP debugger client for Vim (PHP, Python, Perl,
 " Ruby, etc.)
