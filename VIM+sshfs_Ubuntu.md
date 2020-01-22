@@ -8,8 +8,13 @@
 
 # Pacchetti da installare
 ```
-sudo apt install git curl sshfs autossh neovim tmux python-pip python3-pip gnome-tweak-tool
+sudo apt install git curl sshfs autossh neovim tmux python-pip python3-pip gnome-tweak-tool chromium-browser
 ```
+
+
+# Impostare Chromium come browser di default
+- aprire Chromium
+- Impostazioni ---> Imposta come browser predefinito
 
 
 # Abilitazione vimrc su NeoVim
