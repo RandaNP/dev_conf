@@ -10,7 +10,12 @@ endif
 
 " Install Nerd Fonts if not installed
 if has('unix')
-	if empty(glob('~/.local/share/fonts/Sauce Code Pro Nerd Font Complete Mono.ttf'))
+	if has('mac')
+		if empty(glob('~/Library/Fonts/Sauce Code Pro Nerd Font Complete Mono.ttf'))
+			!curl -fLo ~/Library/Fonts/Sauce\ Code\ Pro\ Nerd\ Font\ Complete\ Mono.ttf
+						\ https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Regular/complete/Sauce\%20Code\%20Pro\%20Nerd\%20Font\%20Complete\%20Mono.ttf?raw=true
+		endif
+	elseif empty(glob('~/.local/share/fonts/Sauce Code Pro Nerd Font Complete Mono.ttf'))
 		!curl -fLo ~/.local/share/fonts/Sauce\ Code\ Pro\ Nerd\ Font\ Complete\ Mono.ttf --create-dirs
 					\ https://github.com/ryanoasis/nerd-fonts/blob/master/patched-fonts/SourceCodePro/Regular/complete/Sauce\%20Code\%20Pro\%20Nerd\%20Font\%20Complete\%20Mono.ttf?raw=true
 		!sudo fc-cache -fv ~/.local/share/fonts
@@ -21,10 +26,6 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " My Plugins
-" VIM solarized theme
-"Plug 'altercation/vim-colors-solarized'
-" VIM tomorrow-theme-vim
-"Plug 'd11wtq/tomorrow-theme-vim'
 " VIM gruvbox theme
 Plug 'morhetz/gruvbox'
 " vim-devicons - adds icons to your plugins
