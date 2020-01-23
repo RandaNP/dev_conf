@@ -22,9 +22,9 @@ call plug#begin('~/.vim/plugged')
 
 " My Plugins
 " VIM solarized theme
-Plug 'altercation/vim-colors-solarized'
+"Plug 'altercation/vim-colors-solarized'
 " VIM tomorrow-theme-vim
-Plug 'd11wtq/tomorrow-theme-vim'
+"Plug 'd11wtq/tomorrow-theme-vim'
 " VIM gruvbox theme
 Plug 'morhetz/gruvbox'
 " vim-devicons - adds icons to your plugins
@@ -53,7 +53,7 @@ Plug 'mattn/emmet-vim'
 " vim-easy-align
 Plug 'junegunn/vim-easy-align'
 " Surround - edit surround quotes, tag, etc..
-"Plug 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 " tComment - commentig plugin
 Plug 'tomtom/tplugin_vim'
 " Vdebug - Multi-language DBGP debugger client for Vim (PHP, Python, Perl,
@@ -268,6 +268,7 @@ set encoding=utf-8
 set tabstop=4
 set shiftwidth=4
 set noexpandtab
+set confirm
 
 " NERDTree
 " open NERDTree automatically (without file specified too)
