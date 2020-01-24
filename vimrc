@@ -311,6 +311,10 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+" Buffer navigation
+nnoremap <leader>p :bp<CR>
+nnoremap <leader>n :bn<CR>
+
 " Start scrolling when we're 8 lines away from margins
 set scrolloff=8
 set sidescrolloff=15
