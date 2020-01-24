@@ -88,15 +88,8 @@ set number relativenumber
 syntax enable
 
 " Gruvbox Theme settings
-set termguicolors
 set background=dark
 colorscheme gruvbox
-
-" Tomorrow-Night Theme settings
-"try
-"	color Tomorrow-Night
-"catch
-"endtry
 
 " ----- bling/vim-airline settings start -----
 "  Always show statusbar
@@ -122,24 +115,6 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 " ----- kien/ctrlp.vim setting start -----
 let g:ctrlp_map = '<c-p>'
 " ----- kien/ctrlp.vim setting stop -----
-
-" ----- scooloose/syntastic setting start ---
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_loc_list_height = 5
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_javascript_eslint_exe = 'npm run lint --'
-"let g:syntastic_error_symbol = '❌'
-"let g:syntastic_warning_symbol = '⚠️'
-"highlight link SyntasticErrorSign SignColumn
-"highlight link SyntasticWarningSign SignColumn
-" ----- scroolose/syntastic setting end ----
 
 " ----- A.L.E. settings start -----
 " Airline integration
