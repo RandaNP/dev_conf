@@ -122,8 +122,8 @@ let g:airline#extensions#ale#enabled = 1
 " Show 5 lines of errors (default: 10)
 let g:ale_list_window_size = 5
 " sings customization
-let g:ale_sign_error = '❌'
-let g:ale_sign_warning = '⚠️'
+let g:ale_sign_error = ''
+let g:ale_sign_warning = ''
 " ----- A-L-E- settings end -------
 
 " ----- iamcco/markdown-preview setting start --
@@ -260,6 +260,13 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 let g:NERDTreeHighlightCursorline = 1
 let g:NERDTreeAutoDeleteBuffer = 1
 let g:NERDTreeNaturalSort = 1
+let NERDTreeDirArrowExpandable = "\u00a0"
+let NERDTreeDirArrowCollapsible = "\u00a0"
+
+" Devicons settings
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+let g:DevIconsDefaultFolderOpenSymbol = 'ﱮ'
 
 " The Silver Searcher
 if executable('ag')
