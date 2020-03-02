@@ -90,6 +90,7 @@ syntax enable
 " Gruvbox Theme settings
 set background=dark
 colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'medium'
 
 " ----- bling/vim-airline settings start -----
 "  Always show statusbar
