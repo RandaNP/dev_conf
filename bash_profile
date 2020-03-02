@@ -18,4 +18,4 @@ alias vim='nvim'
 if [ -f ~/.bashrc ]; then
 	source ~/.bashrc
 fi
-export PATH="/usr/local/sbin:$PATH"
+export PATH="~/Library/Python/3.7/bin:/usr/local/sbin:$PATH"
