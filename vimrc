@@ -66,6 +66,9 @@ Plug 'tmux-plugins/vim-tmux'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 " Remark.js plugin - convert MarkDown to self contained HTML slideshows
 Plug 'idbrii/vim-remarkjs'
+" Pandoc - integrates pandoc in vim
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 " IndentLine - show indentation levels
 Plug 'Yggdroot/indentLine'
 " ncm2 - Intellisense / Autocomplete / OmniCompletionPlug 'ncm2/ncm2'
@@ -308,3 +311,5 @@ let php_htmlInStrings = 1  "Syntax highlight HTML code inside PHP strings.
 let php_sql_query = 1      "Syntax highlight SQL code inside PHP strings.
 let php_noShortTags = 1    "Disable PHP short tags.
 
+" disable pandoc suntax conceal
+let g:pandoc#syntax#conceal#use=0
