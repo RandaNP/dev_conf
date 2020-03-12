@@ -244,6 +244,8 @@ nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " ----- LanguageClient-neovim settings end -----
 
 " -------------- My settings ----------------
+set fileformat=unix
+set fileformats=mac,unix,dos
 set encoding=utf-8
 set tabstop=4
 set shiftwidth=4
