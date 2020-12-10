@@ -75,7 +75,15 @@ Plug 'Yggdroot/indentLine'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-bufword'
-"--------------------------------------------------------------------
+" auto-pairs - inserts quotes and parenthesis in pairs as you type
+Plug 'jiangmiao/auto-pairs'
+" yajs - javascript syntax highlighting
+Plug 'othree/yajs'
+" vim-prettier - wrapper for prettier, pre-configured with custom default prettier settings
+Plug 'prettier/vim-prettier', {
+  \ 'do': 'npm install',
+  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
+" --------------------------------------------------------------------
 " LanguageClient (LSP)
 Plug 'autozimu/LanguageClient-neovim', {
 			\ 'branch': 'next',
@@ -229,23 +237,32 @@ set completeopt=noinsert,menuone,noselect
 set hidden
 
 let g:LanguageClient_serverCommands = {
-			\ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
 			\ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
 			\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
 			\ 'python': ['/usr/local/bin/pyls'],
 			\ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
 			\ }
 
-nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+"nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
 nnoremap <silent> L :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " ----- LanguageClient-neovim settings end -----
+ 
+" ----- vim-prettier ---------------------------
+" FORMATTERS
+au FileType javascript setlocal formatprg=prettier
+au FileType javascript.jsx setlocal formatprg=prettier
+au FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+au FileType html setlocal formatprg=js-beautify\ --type\ html
+au FileType scss setlocal formatprg=prettier\ --parser\ css
+au FileType css setlocal formatprg=prettier\ --parser\ css
+" ----- vim-prettier end -----------------------
 
 " -------------- My settings ----------------
 set fileformat=unix
-set fileformats=mac,unix,dos
+set fileformats=unix,dos
 set encoding=utf-8
 set tabstop=4
 set shiftwidth=4
@@ -259,7 +276,7 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " map C-m to toggle NERDTree
 map <C-m> :NERDTreeToggle<CR>
 " close VIM if the only window left open is a NERDTree
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd WinEnter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " open default in vertical split if current buffer is not already saved
 " NON FUNZIONA, apre tutti i nuovi in vertical split
 "autocmd FileType nerdtree nmap <buffer> <CR> s
