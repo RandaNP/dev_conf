@@ -8,27 +8,9 @@
 
 # Pacchetti da installare
 ```
-sudo apt install git curl build-essential file sshfs autossh tmux python-pip python3-pip gnome-tweak-tool chromium-browser
+sudo apt install git curl build-essential file sshfs autossh tmux python-pip python3-pip gnome-tweak-tool chromium-browser neovim
 ```
 
-# Installare Homebrew e aggiungerlo al path
-```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-```
-
-# Installare NeoVim e aggiungere il link vim-->nvim
-```
-brew install neovim
-sudo ln -s /home/linuxbrew/.linuxbrew/bin/nvim /usr/bin/vim
-```
-
-# Impostare Chromium come browser di default
-- aprire Chromium
-- Impostazioni ---> Imposta come browser predefinito
 
 
 # Abilitazione vimrc su NeoVim
