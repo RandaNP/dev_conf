@@ -43,7 +43,7 @@ Plug 'ivalkeen/nerdtree-execute'
 " Syntax highligter
 "Plug 'scrooloose/syntastic'
 " A.L.E. Asynchronous Lint Engine
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 " DirDiff
 Plug 'will133/vim-dirdiff'
 " Linediff
@@ -79,10 +79,6 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'jiangmiao/auto-pairs'
 " yajs - javascript syntax highlighting
 Plug 'othree/yajs'
-" vim-prettier - wrapper for prettier, pre-configured with custom default prettier settings
-Plug 'prettier/vim-prettier', {
-  \ 'do': 'npm install',
-  \ 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'markdown', 'vue', 'yaml', 'html'] }
 " --------------------------------------------------------------------
 " LanguageClient (LSP)
 Plug 'autozimu/LanguageClient-neovim', {
@@ -128,7 +124,7 @@ let g:airline#extensions#tabline#buffer_nr_show = 1
 let g:ctrlp_map = '<c-p>'
 " ----- kien/ctrlp.vim setting stop -----
 
-" ----- A.L.E. settings start -----
+" ----- ALE settings start -----
 " Airline integration
 let g:airline#extensions#ale#enabled = 1
 " Show 5 lines of errors (default: 10)
@@ -136,7 +132,23 @@ let g:ale_list_window_size = 5
 " sings customization
 let g:ale_sign_error = ''
 let g:ale_sign_warning = ''
-" ----- A-L-E- settings end -------
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'typescript': ['prettier', 'tslint'],
+\   'vue': ['eslint'],
+\   'scss': ['prettier'],
+\   'html': ['prettier']
+\}
+let g:ale_linters_explicit = 1
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma all'
+let g:ale_linters = {
+\   'python': ['flake8', 'pylint'],
+\   'javascript': ['eslint'],
+\   'vue': ['eslint']
+\}
+" run ALEFix
+nnoremap <leader>r :ALEFix<CR>
+" ----- ALE settings end -------
 
 " ----- iamcco/markdown-preview setting start --
 " set to 1, nvim will open the preview window after entering the markdown buffer
@@ -196,15 +208,15 @@ let g:mkdp_browserfunc = ''
 " hide_yaml_meta: if hide yaml metadata, default is 1
 " sequence_diagrams: js-sequence-diagrams options
 let g:mkdp_preview_options = {
-			\ 'mkit': {},
-			\ 'katex': {},
-			\ 'uml': {},
-			\ 'maid': {},
-			\ 'disable_sync_scroll': 0,
-			\ 'sync_scroll_type': 'middle',
-			\ 'hide_yaml_meta': 1,
-			\ 'sequence_diagrams': {}
-			\ }
+\   'mkit': {},
+\   'katex': {},
+\   'uml': {},
+\   'maid': {},
+\   'disable_sync_scroll': 0,
+\   'sync_scroll_type': 'middle',
+\   'hide_yaml_meta': 1,
+\   'sequence_diagrams': {}
+\}
 
 " use a custom markdown style must be absolute path
 let g:mkdp_markdown_css = ''
@@ -236,12 +248,12 @@ set completeopt=noinsert,menuone,noselect
 " Required for operations modifying multiple buffers like rename.
 set hidden
 
+" npm install -g typescript-language-server
 let g:LanguageClient_serverCommands = {
-			\ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
-			\ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
-			\ 'python': ['/usr/local/bin/pyls'],
-			\ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
-			\ }
+\   'javascript': ['typescript-language-server', '--stdio'],
+\   'python': ['/usr/local/bin/pyls'],
+\   'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+\}
 
 "nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 " Or map each action separately
@@ -252,21 +264,30 @@ nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
  
 " ----- vim-prettier ---------------------------
 " FORMATTERS
-au FileType javascript setlocal formatprg=prettier
-au FileType javascript.jsx setlocal formatprg=prettier
-au FileType typescript setlocal formatprg=prettier\ --parser\ typescript
-au FileType html setlocal formatprg=js-beautify\ --type\ html
-au FileType scss setlocal formatprg=prettier\ --parser\ css
-au FileType css setlocal formatprg=prettier\ --parser\ css
+"au FileType javascript setlocal formatprg=prettier
+"au FileType javascript.jsx setlocal formatprg=prettier
+"au FileType typescript setlocal formatprg=prettier\ --parser\ typescript
+"au FileType html setlocal formatprg=js-beautify\ --type\ html
+"au FileType scss setlocal formatprg=prettier\ --parser\ css
+"au FileType css setlocal formatprg=prettier\ --parser\ css
+" run prettier
+"nnoremap <leader>r :Prettier<CR>
+" Enable auto formatting of files that have "@format" or "@prettier" tag
+"let g:prettier#autoformat = 1
+" Allow auto formatting for files without "@format" or "@prettier" tag
+"let g:prettier#autoformat_require_pragma = 0
+" The command :Prettier by default is synchronous but can also be forced async
+"let g:prettier#exec_cmd_async = 1
 " ----- vim-prettier end -----------------------
 
 " -------------- My settings ----------------
 set fileformat=unix
 set fileformats=unix,dos
 set encoding=utf-8
-set tabstop=4
-set shiftwidth=4
-set noexpandtab
+set tabstop=2
+set softtabstop=2
+set shiftwidth=2
+set expandtab
 set confirm
 
 " NERDTree
@@ -302,8 +323,8 @@ if executable('ag')
 	" ag is fast enough that CtrlP doesn't need to cache
 	let g:ctrlp_use_caching = 0
 
-	" bind K to grep word under cursor
-	nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+	" bind * to grep word under cursor
+	nnoremap * :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
 endif
 
 " Let <esc> to clear last search highlighting when then redraw screen
