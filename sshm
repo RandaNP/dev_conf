@@ -12,6 +12,7 @@ esac
 
 ARG1=$1
 DIRECTORY=$2
+SSH_OPTIONS=$3
 USERHOST=${ARG1/:*/}
 HOST=${USERHOST/*@/}
 HOST=${HOST/:*/}
@@ -45,7 +46,7 @@ case "${machine}" in
 	Mac)		sshfs -p $PORT $USERHOST:/ -o reconnect,compression=yes,follow_symlinks,ServerAliveInterval=30,ServerAliveCountMax=30,ssh_command='autossh -M 0',defer_permissions $SYSPATH$DIRECTORY -ovolname=$DIRECTORY;;
 esac
 
-autossh -M 0 -p $PORT $USERHOST
+autossh -M 0 -p $PORT $USERHOST $SSH_OPTIONS
 #umount /Volumes/$DIRECTORY
 sudo umount $SYSPATH$DIRECTORY
 rmdir $SYSPATH$DIRECTORY
