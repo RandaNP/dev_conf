@@ -42,7 +42,7 @@ mkdir -p $SYSPATH$DIRECTORY
 #sshfs -p $PORT $USERHOST:/ -o reconnect,compression=yes,follow_symlinks,ServerAliveInterval=30,ServerAliveCountMax=30,ssh_command='autossh -M 0',defer_permissions /Volumes/$DIRECTORY -ovolname=$DIRECTORY
 
 case "${machine}" in
-	Linux)		sshfs -p $PORT $USERHOST:/ -o reconnect,compression=yes,follow_symlinks,ServerAliveInterval=30,ServerAliveCountMax=30,ssh_command='autossh -M 0' $SYSPATH$DIRECTORY;;
+	Linux)		sshfs -p $PORT $USERHOST:/ -o reconnect,compression=yes,follow_symlinks,ServerAliveInterval=30,ServerAliveCountMax=30,ssh_command='autossh -M 0',idmap=user,allow_other,default_permissions $SYSPATH$DIRECTORY;;
 	Mac)		sshfs -p $PORT $USERHOST:/ -o reconnect,compression=yes,follow_symlinks,ServerAliveInterval=30,ServerAliveCountMax=30,ssh_command='autossh -M 0',defer_permissions $SYSPATH$DIRECTORY -ovolname=$DIRECTORY;;
 esac
 
