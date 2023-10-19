@@ -55,6 +55,8 @@ Plug 'mattn/emmet-vim'
 Plug 'junegunn/vim-easy-align'
 " Surround - edit surround quotes, tag, etc..
 Plug 'tpope/vim-surround'
+" Fugitive - git plugin
+Plug 'tpope/vim-fugitive'
 " tComment - commentig plugin
 Plug 'tomtom/tplugin_vim'
 " Vdebug - Multi-language DBGP debugger client for Vim (PHP, Python, Perl,
@@ -289,6 +291,12 @@ set softtabstop=2
 set shiftwidth=2
 set expandtab
 set confirm
+" clipboard in linux
+if has('unix')
+  if !has('mac')
+    set clipboard=unnamedplus
+  endif
+endif
 
 " NERDTree
 " open NERDTree automatically (without file specified too)
