@@ -31,10 +31,10 @@ if [ -z "$DIRECTORY" ]; then
 fi
 
 case "${machine}" in
-	Linux)		SYSPATH=~/.volumes/;;
-	Mac)		SYSPATH=/Volumes/;;
-	*)			echo Error: support only GNU/Linux or MacOS
-				exit 1;;
+	Linux)	SYSPATH=~/.volumes/;;
+	Mac)		SYSPATH=~/.volumes/;;
+  *)			echo Error: support only GNU/Linux or MacOS
+          exit 1;;
 esac
 
 #mkdir -p /Volumes/$DIRECTORY
