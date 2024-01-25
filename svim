@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export DISPLAY=:1
+cd $1
+nvim
+cd -
