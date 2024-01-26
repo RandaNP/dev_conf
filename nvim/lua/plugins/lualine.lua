@@ -15,7 +15,7 @@ return {
           {
             "filename",
             symbols = {
-              modified = "●",
+              modified = "",
             },
           }
         },
@@ -32,7 +32,7 @@ return {
             path = 1,
             shorting_target = 40,
             symbols = {
-              modified = "●",
+              modified = "",
             },
           }
         },
