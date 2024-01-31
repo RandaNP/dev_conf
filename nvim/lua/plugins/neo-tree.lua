@@ -31,7 +31,28 @@ return {
             }
         },
       },
+      filesystem = {
+        window = {
+          mappings = {
+            ["S"] = "none",
+            ["_"] = "open_split",
+            ["|"] = "open_vsplit",
+            ["s"] = "system_open",
+          },
+        },
+        commands = {
+          system_open = function(state)
+            local node = state.tree:get_node()
+            local path = node:get_id()
+            -- macOs: open file in default application in the background.
+            vim.fn.jobstart({ "xdg-open", "-g", path }, { detach = true })
+            -- Linux: open file in default application
+            vim.fn.jobstart({ "xdg-open", path }, { detach = true })
+          end,
+        },
+      }
     })
+
     vim.keymap.set('n', '<CR>', ':Neotree filesystem reveal left<CR>', {})
 
     vim.fn.sign_define("DiagnosticSignError",
