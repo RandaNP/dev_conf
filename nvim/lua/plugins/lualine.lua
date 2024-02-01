@@ -7,7 +7,10 @@ return {
 				theme = "catppuccin",
 				component_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
-				disabled_filetypes = { "neo-tree" },
+				disabled_filetypes = {
+          "neo-tree",
+          "dbui",
+        },
 			},
 			sections = {
 				lualine_a = { "mode" },

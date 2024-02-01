@@ -22,6 +22,12 @@ return {
 							text_align = "left",
 							separator = true,
 						},
+						{
+							filetype = "dbui",
+							text = "Database connections",
+							text_align = "left",
+							separator = true,
+						},
 					},
 				},
 			})
