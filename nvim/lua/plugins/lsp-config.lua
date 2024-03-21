@@ -1,52 +1,67 @@
 return {
-	{
-		-- Automatically install LSPs to stdpath for neovim
-		"williamboman/mason.nvim",
+  {
+    -- Automatically install LSPs to stdpath for neovim
+    "williamboman/mason.nvim",
     lazy = false,
-		config = function()
-			require("mason").setup()
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("mason").setup()
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
     lazy = false,
     opts = {
+      ensure_installed = {
+        "pyright",
+        "ruff_lsp",
+        "pylsp",
+        "angularls",
+        "html",
+        "lua_ls",
+        "tsserver",
+      },
       auto_install = true,
     },
-	},
-	{
-		-- Useful status updates for LSP
-		"j-hui/fidget.nvim",
+  },
+  {
+    -- Useful status updates for LSP
+    "j-hui/fidget.nvim",
     lazy = false,
-		config = function()
-			require("fidget").setup()
-		end,
-	},
-	{
-		-- Additional lua configuration, makes nvim stuff amazing
-		"folke/neodev.nvim",
+    config = function()
+      require("fidget").setup()
+    end,
+  },
+  {
+    -- Additional lua configuration, makes nvim stuff amazing
+    "folke/neodev.nvim",
     lazy = false,
-		config = function()
-			require("neodev").setup()
-		end,
-	},
-	{
-		"neovim/nvim-lspconfig",
+    config = function()
+      require("neodev").setup({
+        library = { plugins = { "nvim-dap-ui" }, types = true },
+      })
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
     lazy = false,
-		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+    config = function()
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
-			})
-			lspconfig.tsserver.setup({
-				capabilities = capabilities,
-			})
+      local lspconfig = require("lspconfig")
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.pyright.setup({
+        capabilities = capabilities,
+        filetypes = { "python" },
+      })
+      lspconfig.tsserver.setup({
+        capabilities = capabilities,
+      })
 
-			vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "[G]oto [D]efinition" })
-			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction" })
-		end,
-	},
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "[G]oto [D]efinition" })
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction" })
+    end,
+  },
 }
