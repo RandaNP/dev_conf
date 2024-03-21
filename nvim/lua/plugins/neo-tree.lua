@@ -55,7 +55,7 @@ return {
 		})
 
 		vim.keymap.set("n", "<CR>", ":Neotree toggle<CR>", {})
-		vim.keymap.set("n", "<leader>gs", ":Neotree float git_status<CR>", { desc = "[G]it [S]tatus" })
+		-- vim.keymap.set("n", "<leader>gs", ":Neotree float git_status<CR>", { desc = "[G]it [S]tatus" })
 
 		vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
 		vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
