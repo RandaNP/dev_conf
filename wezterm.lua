@@ -1,5 +1,6 @@
 -- Pull in the wezterm API
 local wezterm = require 'wezterm'
+local act = wezterm.action
 
 -- This table will hold the configuration.
 local config = {}
@@ -21,11 +22,12 @@ config.window_padding = {
   bottom = '1px',
 }
 config.font =
-  wezterm.font("SauceCodePro Nerd Font Mono", {
-    weight="Regular",
-    stretch="Normal",
-    style="Normal"
-  })
+    wezterm.font("SauceCodePro Nerd Font Mono", {
+      weight = "Regular",
+      stretch = "Normal",
+      style = "Normal"
+    })
+config.font_size = 14
 
 -- and finally, return the configuration to wezterm
 return config
