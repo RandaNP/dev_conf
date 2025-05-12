@@ -1,0 +1,25 @@
+return {
+  -- {
+  --   -- add arduino LSP
+  --   "neovim/nvim-lspconfig",
+  --   ---@class PluginLspOpts
+  --   opts = {
+  --     ---@type lspconfig.options
+  --     servers = {
+  --       clangd = {},
+  --     },
+  --     setup = {
+  --       clangd = function()
+  --         require("lspconfig").clangd.setup({
+  --           cmd = { "clangd", "--compile-commands-dir=" .. vim.loop.cwd() },
+  --           filetypes = { "c", "cpp", "objc", "objcpp", "arduino" },
+  --           init_options = {
+  --             usePlaceholders = true,
+  --             completeUnimported = true,
+  --           },
+  --         })
+  --       end,
+  --     },
+  --   },
+  -- },
+}
