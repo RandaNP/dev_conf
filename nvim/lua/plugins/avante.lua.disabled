@@ -5,6 +5,8 @@ return {
   lazy = false,
   -- version = false, -- Never set this value to "*"! Never!
   -- commit = "6bfd792",
+  -- commit = "7e50de8", --v0.0.27
+  version = "v0.0.24",
   ---@module 'avante'
   ---@type avante.Config
   opts = {
@@ -23,7 +25,7 @@ return {
         -- context_window = 250000,
         extra_request_body = {
           generationConfig = {
-            temperature = 0,
+            temperature = 0.25,
           },
           -- temperature = 0,
           -- max_tokens = 4096,
@@ -35,9 +37,9 @@ return {
         auto_suggestion = false,
         auto_set_highlight_group = true,
         auto_set_keymaps = true,
-        auto_apply_diff_after_generation = false,
+        auto_apply_diff_after_generation = true,
         support_paste_from_clipboard = false,
-        jump_result_buffer_on_finish = true,
+        -- jump_result_buffer_on_finish = true,
       },
     },
   },
