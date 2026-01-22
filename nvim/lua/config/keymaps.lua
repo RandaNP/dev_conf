@@ -1,8 +1,6 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
-local map = vim.keymap.set
-map("n", "<leader>aC", "<cmd>AvanteChat<cr>", { desc = "avante: chat" })
 
 -- clipboard in Windows Subsystem for Linux
 if vim.fn.has("wsl") == 1 then

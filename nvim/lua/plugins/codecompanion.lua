@@ -1,43 +1,58 @@
 return {
   "olimorris/codecompanion.nvim",
-  -- version="v17.33.00" --breaking-changes
   dependencies = {
     { "nvim-lua/plenary.nvim", branch = "master" },
     "ravitemer/codecompanion-history.nvim",
     "franco-ruggeri/codecompanion-spinner.nvim",
   },
   opts = {
-    strategies = {
+    interactions = {
       cmd = {
-        -- adapter = {
-        -- name = "gemini",
-        -- model = "gemini-2.5-flash",
-        -- },
         adapter = {
-          name = "ollama",
-          model = "qwen3:4b-instruct",
+          name = "gemini",
+          model = "gemini-2.0-flash",
         },
+        -- adapter = {
+        --   name = "ollama",
+        --   model = "qwen3:4b-instruct",
+        -- },
       },
       chat = {
-        -- adapter = {
-        -- name = "gemini",
-        -- model = "gemini-2.5-flash",
-        -- },
         adapter = {
-          name = "ollama",
-          model = "qwen3:4b-instruct",
+          name = "gemini",
+          model = "gemini-2.0-flash",
+        },
+        -- adapter = {
+        --   name = "ollama",
+        --   model = "qwen3:4b-instruct",
+        -- },
+        roles = {
+          ---The header name for the LLM's messages
+          ---@type string|fun(adapter: CodeCompanion.Adapter): string
+          llm = function(adapter)
+            return "CodeCompanion (" .. adapter.formatted_name .. " " .. adapter.model.name .. ")"
+          end,
+        },
+        variables = {
+          ["buffer"] = {
+            opts = {
+              -- Always sync the buffer by sharing its "diff"
+              -- Or choose "all" to share the entire buffer
+              default_params = "diff",
+            },
+          },
         },
       },
-      inline = {
-        -- adapter = {
-        -- name = "gemini",
-        -- model = "gemini-2.5-flash",
-        -- },
-        adapter = {
-          name = "ollama",
-          model = "qwen3:4b-instruct",
-        },
-      },
+      -- inline = {
+      --   adapter = {
+      --     name = "gemini",
+      --     model = "gemini-2.0-flash",
+      --   },
+      --   -- adapter = {
+      --   --   name = "ollama",
+      --   --   model = "qwen3:4b-instruct",
+      --   -- },
+      -- },
     },
     extensions = {
       spinner = {},
@@ -67,9 +82,9 @@ return {
           title_generation_opts = {
             ---Adapter for generating titles (defaults to current chat adapter)
             adapter = {
-              name = "ollama", -- gemini", -- "copilot"
+              name = "gemini", -- ollama", -- "copilot"
               ---Model for generating titles (defaults to current chat model)
-              model = "qwen3:4b-instruct", -- gemini-2.0-flash", -- "gpt-4o"
+              model = "gemini-2.0-flash-lite", -- qwen3:4b-instruct", -- "gpt-4o"
               opts = {
                 thinkingConfig = {
                   thinkingBudget = 0,
@@ -103,9 +118,9 @@ return {
             browse_summaries_keymap = "gbs",
 
             generation_opts = {
-              adapter = "ollama", -- gemini", -- defaults to current chat adapter
-              model = "qwen3:4b-instruct", -- gemini-2.0-flash", -- defaults to current chat model
-              context_size = 32000, -- 4000000, -- max tokens that the model supports
+              adapter = "gemini", -- ollama", -- defaults to current chat adapter
+              model = "gemini-2.0-flash-lite", -- qwen3:4b-instruct", -- defaults to current chat model
+              context_size = 1048576, -- 32000, -- 4000000, -- max tokens that the model supports
               include_references = true, -- include slash command content
               include_tool_outputs = true, -- include tool execution results
               system_prompt = nil, -- custom system prompt (string or function)
@@ -114,7 +129,7 @@ return {
           },
 
           -- Memory system (requires VectorCode CLI)
-          -- memory = {
+          -- rules = {
           --   -- Automatically index summaries when they are generated
           --   auto_create_memories_on_summary_generation = true,
           --   -- Path to the VectorCode executable
@@ -134,4 +149,25 @@ return {
       },
     },
   },
+  config = function(_, opts)
+    require("codecompanion").setup(opts)
+    -- Keymap
+    local map = vim.keymap.set
+    map(
+      "n",
+      "<leader>ac",
+      "<CMD>CodeCompanionChat Toggle<CR>",
+      { desc = "AI: toggle chat or open standard chat", noremap = true, silent = true }
+    )
+    map(
+      "n",
+      "<leader>aC",
+      "<CMD>CodeCompanionChat adapter=gemini model=gemini-3.0-flash<CR>",
+      { desc = "AI: open gemini-3 chat", noremap = true, silent = true }
+    )
+    map("n", "<leader>aa", "<CMD>CodeCompanionActions<CR>", { desc = "AI: actions", noremap = true, silent = true })
+
+    -- Expand 'cc' into 'CodeCompanion' in the command line
+    vim.cmd([[cab cc CodeCompanion]])
+  end,
 }
