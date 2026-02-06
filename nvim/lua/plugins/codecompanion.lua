@@ -3,9 +3,67 @@ return {
   dependencies = {
     { "nvim-lua/plenary.nvim", branch = "master" },
     "ravitemer/codecompanion-history.nvim",
-    "franco-ruggeri/codecompanion-spinner.nvim",
+    "lalitmee/codecompanion-spinners.nvim",
   },
   opts = {
+    adapters = {
+      http = {
+        gemini__3_pro = function()
+          return require("codecompanion.adapters").extend("gemini", {
+            schema = {
+              model = {
+                default = "gemini-3-pro-preview",
+              },
+            },
+          })
+        end,
+        gemini_3_flash = function()
+          return require("codecompanion.adapters").extend("gemini", {
+            schema = {
+              model = {
+                default = "gemini-3-flash-preview",
+              },
+            },
+          })
+        end,
+        gemini__2_5_pro = function()
+          return require("codecompanion.adapters").extend("gemini", {
+            schema = {
+              model = {
+                default = "gemini-2.5-pro",
+              },
+            },
+          })
+        end,
+        gemini_2_5_flash = function()
+          return require("codecompanion.adapters").extend("gemini", {
+            schema = {
+              model = {
+                default = "gemini-2.5-flash",
+              },
+            },
+          })
+        end,
+        gemini_2_flash = function()
+          return require("codecompanion.adapters").extend("gemini", {
+            schema = {
+              model = {
+                default = "gemini-2.0-flash",
+              },
+            },
+          })
+        end,
+        opts = {
+          show_presets = false,
+          show_model_choices = false,
+        },
+      },
+      acp = {
+        opts = {
+          show_presets = false,
+        },
+      },
+    },
     interactions = {
       cmd = {
         adapter = {
@@ -18,10 +76,11 @@ return {
         -- },
       },
       chat = {
-        adapter = {
-          name = "gemini",
-          model = "gemini-2.0-flash",
-        },
+        adapter = "gemini_2_flash",
+        -- adapter = {
+        --   name = "gemini",
+        --   model = "gemini-2.0-flash",
+        -- },
         -- adapter = {
         --   name = "ollama",
         --   model = "qwen3:4b-instruct",
@@ -43,19 +102,25 @@ return {
           },
         },
       },
-      -- inline = {
-      --   adapter = {
-      --     name = "gemini",
-      --     model = "gemini-2.0-flash",
-      --   },
-      --   -- adapter = {
-      --   --   name = "ollama",
-      --   --   model = "qwen3:4b-instruct",
-      --   -- },
-      -- },
+      inline = {
+        adapter = {
+          name = "gemini",
+          model = "gemini-2.0-flash-lite",
+        },
+        -- adapter = {
+        --   name = "ollama",
+        --   model = "qwen3:4b-instruct",
+        -- },
+      },
     },
     extensions = {
-      spinner = {},
+      spinner = {
+        -- enabled = true, -- This is the default
+        opts = {
+          -- Your spinner configuration goes here
+          style = "noice", -- "snacks", "noice"
+        },
+      },
       history = {
         enabled = true,
         opts = {
@@ -113,13 +178,21 @@ return {
           -- Summary system
           summary = {
             -- Keymap to generate summary for current chat (default: "gcs")
-            create_summary_keymap = "gcs",
+            create_summary_keymap = "cs",
             -- Keymap to browse summaries (default: "gbs")
             browse_summaries_keymap = "gbs",
 
             generation_opts = {
-              adapter = "gemini", -- ollama", -- defaults to current chat adapter
-              model = "gemini-2.0-flash-lite", -- qwen3:4b-instruct", -- defaults to current chat model
+              adapter = {
+                name = "gemini", -- ollama", -- "copilot"
+                ---Model for generating titles (defaults to current chat model)
+                model = "gemini-2.0-flash-lite", -- qwen3:4b-instruct", -- "gpt-4o"
+                opts = {
+                  thinkingConfig = {
+                    thinkingBudget = 0,
+                  },
+                },
+              },
               context_size = 1048576, -- 32000, -- 4000000, -- max tokens that the model supports
               include_references = true, -- include slash command content
               include_tool_outputs = true, -- include tool execution results
@@ -162,10 +235,16 @@ return {
     map(
       "n",
       "<leader>aC",
-      "<CMD>CodeCompanionChat adapter=gemini model=gemini-3.0-flash<CR>",
+      "<CMD>CodeCompanionChat adapter=gemini model=gemini-3-flash-preview<CR>",
       { desc = "AI: open gemini-3 chat", noremap = true, silent = true }
     )
     map("n", "<leader>aa", "<CMD>CodeCompanionActions<CR>", { desc = "AI: actions", noremap = true, silent = true })
+    map(
+      "n",
+      "<leader>ah",
+      "<CMD>CodeCompanionHistory<CR>",
+      { desc = "AI: chat history", noremap = true, silent = true }
+    )
 
     -- Expand 'cc' into 'CodeCompanion' in the command line
     vim.cmd([[cab cc CodeCompanion]])
