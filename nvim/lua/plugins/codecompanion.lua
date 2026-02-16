@@ -8,7 +8,7 @@ return {
   opts = {
     adapters = {
       http = {
-        gemini__3_pro = function()
+        gemini__3_pro_200 = function()
           return require("codecompanion.adapters").extend("gemini", {
             schema = {
               model = {
@@ -17,7 +17,7 @@ return {
             },
           })
         end,
-        gemini_3_flash = function()
+        gemini_3_flash_50 = function()
           return require("codecompanion.adapters").extend("gemini", {
             schema = {
               model = {
@@ -26,7 +26,7 @@ return {
             },
           })
         end,
-        gemini__2_5_pro = function()
+        gemini__2_5_pro_125 = function()
           return require("codecompanion.adapters").extend("gemini", {
             schema = {
               model = {
@@ -35,7 +35,7 @@ return {
             },
           })
         end,
-        gemini_2_5_flash = function()
+        gemini_2_5_flash_30 = function()
           return require("codecompanion.adapters").extend("gemini", {
             schema = {
               model = {
@@ -44,11 +44,11 @@ return {
             },
           })
         end,
-        gemini_2_flash = function()
+        gemini_2_5_flash_lite_10 = function()
           return require("codecompanion.adapters").extend("gemini", {
             schema = {
               model = {
-                default = "gemini-2.0-flash",
+                default = "gemini-2.5-flash-lite",
               },
             },
           })
@@ -76,7 +76,7 @@ return {
         -- },
       },
       chat = {
-        adapter = "gemini_2_flash",
+        adapter = "gemini_2_5_flash_lite_10",
         -- adapter = {
         --   name = "gemini",
         --   model = "gemini-2.0-flash",
