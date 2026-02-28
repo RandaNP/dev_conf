@@ -8,6 +8,15 @@ return {
   opts = {
     adapters = {
       http = {
+        deepseek_3_2_30 = function()
+          return require("codecompanion.adapters").extend("deepseek", {
+            schema = {
+              model = {
+                default = "deepseek-reasoner",
+              },
+            },
+          })
+        end,
         gemini__3_pro_200 = function()
           return require("codecompanion.adapters").extend("gemini", {
             schema = {
@@ -146,16 +155,16 @@ return {
           auto_generate_title = true,
           title_generation_opts = {
             ---Adapter for generating titles (defaults to current chat adapter)
-            adapter = {
-              name = "gemini", -- ollama", -- "copilot"
-              ---Model for generating titles (defaults to current chat model)
-              model = "gemini-2.0-flash-lite", -- qwen3:4b-instruct", -- "gpt-4o"
-              opts = {
-                thinkingConfig = {
-                  thinkingBudget = 0,
-                },
-              },
-            },
+            -- adapter = {
+            --   name = nil, -- "gemini", -- ollama", -- "copilot"
+            --   ---Model for generating titles (defaults to current chat model)
+            --   model = nil, -- "gemini-2.0-flash-lite", -- qwen3:4b-instruct", -- "gpt-4o"
+            --   opts = {
+            --     thinkingConfig = {
+            --       thinkingBudget = 0,
+            --     },
+            --   },
+            -- },
             ---Number of user prompts after which to refresh the title (0 to disable)
             refresh_every_n_prompts = 0, -- e.g., 3 to refresh after every 3rd user prompt
             ---Maximum number of times to refresh the title (default: 3)
@@ -183,16 +192,16 @@ return {
             browse_summaries_keymap = "gbs",
 
             generation_opts = {
-              adapter = {
-                name = "gemini", -- ollama", -- "copilot"
-                ---Model for generating titles (defaults to current chat model)
-                model = "gemini-2.0-flash-lite", -- qwen3:4b-instruct", -- "gpt-4o"
-                opts = {
-                  thinkingConfig = {
-                    thinkingBudget = 0,
-                  },
-                },
-              },
+              -- adapter = {
+              --   name = "gemini", -- ollama", -- "copilot"
+              --   ---Model for generating titles (defaults to current chat model)
+              --   model = "gemini-2.0-flash-lite", -- qwen3:4b-instruct", -- "gpt-4o"
+              --   opts = {
+              --     thinkingConfig = {
+              --       thinkingBudget = 0,
+              --     },
+              --   },
+              -- },
               context_size = 1048576, -- 32000, -- 4000000, -- max tokens that the model supports
               include_references = true, -- include slash command content
               include_tool_outputs = true, -- include tool execution results
