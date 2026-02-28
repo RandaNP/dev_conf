@@ -14,6 +14,20 @@ return {
         desc = "Test coverage",
       },
       {
+        "<leader>tcr",
+        function()
+          require("neotest").run.run({ extra_args = { "--cov=src" } })
+        end,
+        desc = "Coverage run nearest test",
+      },
+      {
+        "<leader>tcR",
+        function()
+          require("neotest").run.run({ vim.uv.cwd(), extra_args = { "--cov=src" } })
+        end,
+        desc = "Coverage run all tests",
+      },
+      {
         "<leader>tcl",
         function()
           require("coverage").load(true)
