@@ -34,21 +34,21 @@ return {
         desc = "Continue",
       },
       {
-        "<F10>",
-        function()
-          require("dap").step_over()
-        end,
-        desc = "Step Over",
-      },
-      {
-        "<F11>",
+        "<F6>",
         function()
           require("dap").step_into()
         end,
         desc = "Step Into",
       },
       {
-        "<F12>",
+        "<F7>",
+        function()
+          require("dap").step_over()
+        end,
+        desc = "Step Over",
+      },
+      {
+        "<F8>",
         function()
           require("dap").step_out()
         end,
