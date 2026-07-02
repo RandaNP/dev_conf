@@ -1,13 +1,45 @@
 return {
   "olimorris/codecompanion.nvim",
+  -- version = "^19.0.0",
   dependencies = {
-    { "nvim-lua/plenary.nvim", branch = "master" },
+    "nvim-lua/plenary.nvim",
+    "nvim-treesitter/nvim-treesitter",
     "ravitemer/codecompanion-history.nvim",
     "lalitmee/codecompanion-spinners.nvim",
   },
   opts = {
     adapters = {
       http = {
+        qwen3_5 = function()
+          return require("codecompanion.adapters").extend("ollama", {
+            schema = {
+              model = {
+                default = "qwen3.5:4b",
+              },
+              think = {
+                default = true,
+              },
+              temperature = {
+                default = 0.6,
+              },
+              -- num_ctx = {
+              --   default = 262144,
+              -- },
+              top_p = {
+                default = 0.95,
+              },
+              top_k = {
+                default = 20,
+              },
+              min_p = {
+                default = 0.01,
+              },
+              repeat_penalty = {
+                default = 1.0,
+              },
+            },
+          })
+        end,
         deepseek_3_2_30 = function()
           return require("codecompanion.adapters").extend("deepseek", {
             schema = {
@@ -75,17 +107,18 @@ return {
     },
     interactions = {
       cmd = {
-        adapter = {
-          name = "gemini",
-          model = "gemini-2.0-flash",
-        },
+        adapter = "deepseek_3_2_30",
+        -- adapter = {
+        --   name = "gemini",
+        --   model = "gemini-2.0-flash",
+        -- },
         -- adapter = {
         --   name = "ollama",
         --   model = "qwen3:4b-instruct",
         -- },
       },
       chat = {
-        adapter = "gemini_2_5_flash_lite_10",
+        adapter = "deepseek_3_2_30",
         -- adapter = {
         --   name = "gemini",
         --   model = "gemini-2.0-flash",
@@ -113,8 +146,8 @@ return {
       },
       inline = {
         adapter = {
-          name = "gemini",
-          model = "gemini-2.0-flash-lite",
+          name = "deepseek",
+          model = "deepseek-chat",
         },
         -- adapter = {
         --   name = "ollama",
